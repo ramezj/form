@@ -19,6 +19,7 @@ export default function Home() {
   // };
   const submitForm = async (e:React.FormEvent) => {
     e.preventDefault();
+    console.log(fields);
     const res = await createForm(fields);
     console.log(res);
   }
