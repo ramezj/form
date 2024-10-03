@@ -8,6 +8,8 @@
 
 # environment
 .env
+/.env
+
 
 # testing
 /coverage
