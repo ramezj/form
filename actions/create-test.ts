@@ -6,9 +6,9 @@ export async function createForm(fields:Field[]) {
     try {
         const data = await prisma.form.create({
             data: {
-                fields: fields
+                content: fields
             }
-        });
+        })
         console.log(data);
     } catch (error) {
         console.log(error);
@@ -17,13 +17,26 @@ export async function createForm(fields:Field[]) {
 
 export async function GetForm(id: string) {
     try {
-       const data = await prisma.form.findFirst({
-        where: {
-            id: id
+        const data = await prisma.form.findFirst({
+            where: {
+                id: id
+            }
+        })
+        if(!data) return null;
+        return {
+            form:data,
+            fields: data?.content as Field[]
         }
-       })
-       const fields = data?.fields ? JSON.parse(data.fields) : [];
     } catch (error) {
-        console.log(error);
+       console.error(error); 
     }
+}
+
+export async function handleFormSubmission(formData: FormData) {
+    const data: { [ key: string ]: string } = {};
+    formData.forEach((value, key) => {
+        data[key] = value as string; // Store form fields as key-value pairs
+    });
+    console.log(data);
+    return { success: true, data };
 }
