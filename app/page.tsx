@@ -3,7 +3,7 @@ import React from "react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import createForm from "@/actions/create-test";
+import { createForm } from "@/actions/create-test";
 
 export default function Home() {
   const [fields, setFields] = useState<Field[]>([]);

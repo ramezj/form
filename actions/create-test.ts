@@ -1,16 +1,28 @@
 "use server"
-import { supabase } from "@/lib/supabase";
+// import { supabase } from "@/lib/supabase";
+import prisma from "@/lib/database";
 
-export default async function createForm(fields:Field[]) {
+export async function createForm(fields:Field[]) {
     try {
-        const { data, error } = await supabase
-        .from('Form')
-        .insert([{ fields }]); 
-        if (error) {
-            console.error('Error saving form structure:',);
-          } else {
-            console.log('Form saved successfully:', data);
-          }
+        const data = await prisma.form.create({
+            data: {
+                fields: fields
+            }
+        });
+        console.log(data);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export async function GetForm(id: string) {
+    try {
+       const data = await prisma.form.findFirst({
+        where: {
+            id: id
+        }
+       })
+       const fields = data?.fields ? JSON.parse(data.fields) : [];
     } catch (error) {
         console.log(error);
     }
